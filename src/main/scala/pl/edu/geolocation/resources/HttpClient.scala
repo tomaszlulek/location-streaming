@@ -8,18 +8,21 @@ import org.http4s.netty.client.{HttpProxy, NettyClientBuilder}
 
 object HttpClient {
 
-  def make[F[_]: Async](proxyHost: Option[String], proxyPort: Option[Int]): Resource[F, Client[F]] = {
-    val builder = NettyClientBuilder[F]
-    val afterProxy =
-      if(proxyHost.isDefined && proxyPort.isDefined) {
-        builder.withProxy(HttpProxy(
-          Scheme.https,
-          Host.fromString(proxyHost.get).get,
-          Port.fromInt(proxyPort.get)
-        ))
-      }
-      else builder
-    afterProxy.resource
+  def make[F[_]: Async]: Resource[F, Client[F]] = {
+    for {
+      config <- HttpClientCfgBuilder.make().resource
+      builder = NettyClientBuilder[F]
+      afterProxy =
+        if (config.proxyHost.isDefined && config.proxyPort.isDefined) {
+          builder.withProxy(HttpProxy(
+            Scheme.https,
+            Host.fromString(config.proxyHost.get).get,
+            Port.fromInt(config.proxyPort.get.value)
+          ))
+        }
+        else builder
+      client <- afterProxy.resource
+    } yield client
   }
 
 }

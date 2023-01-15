@@ -1,13 +1,12 @@
 package pl.edu.geolocation.sources.ztm
 
-import cats.effect.IO
+import cats.effect.kernel.Concurrent
 import io.circe.Decoder
 import org.http4s.EntityDecoder
 import org.http4s.circe.jsonOf
 import pl.edu.geolocation.sources.ztm.ZTMResponse.Vehicle
 import io.circe.generic.auto._
-
-import java.time.{Instant, LocalDateTime, ZoneId, ZoneOffset}
+import java.time.{Instant, LocalDateTime, ZoneId}
 import java.time.format.DateTimeFormatter
 import scala.util.Try
 
@@ -23,8 +22,8 @@ object ZTMResponse {
     Lines: String,
     VehicleNumber: String,
     Brigade: String,
-    Lon: BigDecimal,
     Lat: BigDecimal,
+    Lon: BigDecimal,
     Time: Instant
   )
 
@@ -33,7 +32,7 @@ object ZTMResponse {
     implicit val decodeInstant: Decoder[Instant] = Decoder.decodeString.emapTry { str =>
       Try(LocalDateTime.parse(str, tsFormatter).atZone(ZoneId.of("Europe/Warsaw")).toInstant)
     }
-    implicit val responseDecoder: EntityDecoder[IO, ZTMResponse] = jsonOf[IO, ZTMResponse]
+    implicit def responseDecoder[F[_] : Concurrent]: EntityDecoder[F, ZTMResponse] = jsonOf[F, ZTMResponse]
   }
 
 }
