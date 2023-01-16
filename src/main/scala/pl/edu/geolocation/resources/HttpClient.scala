@@ -5,6 +5,7 @@ import com.comcast.ip4s.{Host, Port}
 import org.http4s.Uri.Scheme
 import org.http4s.client.Client
 import org.http4s.netty.client.{HttpProxy, NettyClientBuilder}
+import pl.edu.geolocation.config.HttpClientCfgBuilder
 
 object HttpClient {
 

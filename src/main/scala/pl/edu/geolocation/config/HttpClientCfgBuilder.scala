@@ -1,4 +1,4 @@
-package pl.edu.geolocation.resources
+package pl.edu.geolocation.config
 
 import cats.implicits._
 import ciris.refined._

@@ -4,7 +4,7 @@ import cats.effect.{ExitCode, IO, IOApp}
 import org.typelevel.log4cats.slf4j.Slf4jFactory
 import org.typelevel.log4cats.LoggerFactory
 import fs2.aws.kinesis.publisher.writeObjectToKinesis
-import pl.edu.geolocation.config.SrcFetcherCfgBuilder
+import pl.edu.geolocation.config.KinesisCfgBuilder
 import pl.edu.geolocation.kinesis.LocationRecord
 import pl.edu.geolocation.kinesis.LocationRecord.implicits._
 import pl.edu.geolocation.sources.ztm.ZTMApi
@@ -18,7 +18,7 @@ object SrcFetcher extends IOApp {
   def run(args: List[String]): IO[ExitCode] = {
     val logger = LoggerFactory[IO].getLogger
     for {
-      config <- SrcFetcherCfgBuilder.make[IO]().load[IO]
+      config <- KinesisCfgBuilder.make[IO]().load[IO]
       _ <- logger.info(s"Starting application publishing source stream to Kinesis stream ${config.kinesisStream}")
       _ <- ZTMApi.makeLocationSource[IO]().getStream
         .map(a => (a.id, a))

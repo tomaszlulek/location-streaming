@@ -4,6 +4,7 @@ import cats.implicits._
 import cats.effect.kernel.Async
 import fs2.Stream
 import org.http4s.client.Client
+import pl.edu.geolocation.config.ZTMCfgBuilder
 import pl.edu.geolocation.kinesis.LocationRecord
 import pl.edu.geolocation.resources.HttpClient
 import pl.edu.geolocation.sources.LocationSource

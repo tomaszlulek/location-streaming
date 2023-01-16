@@ -1,4 +1,4 @@
-package pl.edu.geolocation.sources.ztm
+package pl.edu.geolocation.config
 
 import cats.implicits._
 import ciris.{ConfigValue, Secret, env}
@@ -18,7 +18,7 @@ object ZTMCfgBuilder {
       env("ENDPOINT").as[String],
       env("RESOURCE_ID").as[String],
       env("API_KEY").as[String].secret,
-      env("API_FREQUENCY_SECONDS").as[Long].default(5)
+      env("API_FREQUENCY_SECONDS").as[Long].default(60)
     ).parMapN(SrcFetcherCfg)
   }
 }
