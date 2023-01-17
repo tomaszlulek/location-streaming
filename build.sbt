@@ -14,7 +14,7 @@ val log4catsVersion = "2.5.0"
 val logbackVersion = "1.2.11"//newer versions based on slf4j-api-2.x not compatible with AWS SDK
 val cirisVersion = "3.0.0"
 val fs2AWSVersion = "5.1.0"
-val nettyHTTP2CodecVersion = "4.1.85.Final"//the version should be consistent with other netty packages coming from http4s
+val nettyHTTP2CodecVersion = "4.1.85.Final"//version should be consistent with other netty packages coming from http4s
 val javaxXmlVersion = "2.3.1"
 
 resolvers += "confluent" at "https://packages.confluent.io/maven/"
