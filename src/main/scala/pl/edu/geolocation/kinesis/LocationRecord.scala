@@ -1,12 +1,12 @@
 package pl.edu.geolocation.kinesis
 
-import io.circe.Encoder
+import io.circe.{Decoder, Encoder}
 import io.circe.generic.semiauto._
 import io.circe.syntax._
 
 import java.nio.ByteBuffer
 import java.time.format.DateTimeFormatter
-import java.time.{Instant, ZoneId}
+import java.time.{Instant, LocalDateTime, ZoneId}
 
 case class LocationRecord(
     id: String,
@@ -27,8 +27,12 @@ object LocationRecord {
   object implicits {
     implicit val instantEncoder: Encoder[Instant] = Encoder.encodeString
       .contramap[Instant](instant => formatter.format(instant))
-    implicit val fooEncoder: Encoder[LocationRecord] =
+    implicit val instantDecoder: Decoder[Instant] = Decoder.decodeString
+      .map(a => Instant.from(LocalDateTime.parse(a, formatter).atZone(ZoneId.of("UTC"))))
+    implicit val locationRecordEncoder: Encoder[LocationRecord] =
       deriveEncoder[LocationRecord]
+    implicit val locationRecordDecoder: Decoder[LocationRecord] =
+      deriveDecoder[LocationRecord]
     implicit val kinesisEncoder: LocationRecord => ByteBuffer = { a =>
       ByteBuffer.wrap(a.asJson.noSpaces.getBytes)
     }

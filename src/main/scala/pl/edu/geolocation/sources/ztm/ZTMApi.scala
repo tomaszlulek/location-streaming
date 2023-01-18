@@ -64,13 +64,14 @@ object ZTMApi {
         currentTs <- clock.realTimeInstant
       } yield vehicles.map(vehicle =>
         LocationRecord(
-          id = vehicle.Lines,
+          id = vehicle.Lines + "_" + vehicle.Brigade + "_" + vehicle.VehicleNumber,
           lat = vehicle.Lat,
           lon = vehicle.Lon,
           ts = vehicle.Time,
           params = Map(
-            "VehicleNumber" -> vehicle.VehicleNumber,
-            "Brigade" -> vehicle.Brigade
+            "lines" -> vehicle.Lines,
+            "vehicle_number" -> vehicle.VehicleNumber,
+            "brigade" -> vehicle.Brigade
           ),
           fetch_id = uuid.toString,
           fetch_ts = currentTs
