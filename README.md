@@ -1,4 +1,4 @@
-# location-streaming
+# location-streaming <a href="https://typelevel.org/cats/"><img src="https://typelevel.org/cats/img/cats-badge.svg" height="40px" align="right" alt="Cats friendly" /></a>
 
 The project provides a framework to fetch, load and analyse location data in a stream.
 
