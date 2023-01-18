@@ -5,12 +5,11 @@ import ciris.{ConfigValue, Secret, env}
 
 object ZTMCfgBuilder {
 
-  final case class SrcFetcherCfg
-  (
-    endpoint: String,
-    resourceId: String,
-    apiKey: Secret[String],
-    apiFrequencySeconds: Long
+  final case class SrcFetcherCfg(
+      endpoint: String,
+      resourceId: String,
+      apiKey: Secret[String],
+      apiFrequencySeconds: Long
   )
 
   def make[F[_]](): ConfigValue[F, SrcFetcherCfg] = {

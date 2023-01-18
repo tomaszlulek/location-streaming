@@ -1,11 +1,11 @@
 package pl.edu.geolocation
 
-import cats.effect.{Async, ExitCode, IO, IOApp, Resource}
+import cats.effect._
 import fs2.aws.kinesis.{Kinesis, KinesisCheckpointSettings, KinesisConsumerSettings}
 import fs2.aws.s3.S3
 import io.laserdisc.pure.s3.tagless.S3AsyncClientOp
-import org.typelevel.log4cats.{LoggerFactory, SelfAwareStructuredLogger}
 import org.typelevel.log4cats.slf4j.Slf4jFactory
+import org.typelevel.log4cats.{LoggerFactory, SelfAwareStructuredLogger}
 import pl.edu.geolocation.config.{KinesisCfgBuilder, S3CfgBuilder}
 import pl.edu.geolocation.resources.{KinesisConsumer, S3Client}
 import pl.edu.geolocation.s3.S3Writer
@@ -14,15 +14,16 @@ object Kinesis2S3 extends IOApp {
 
   implicit val logging: LoggerFactory[IO] = Slf4jFactory[IO]
 
-  private def getResources[F[_] : Async]
-  : Resource[F, (Kinesis[F], S3AsyncClientOp[F])] = for {
+  private def getResources[F[_]: Async]
+      : Resource[F, (Kinesis[F], S3AsyncClientOp[F])] = for {
     kinesis <- KinesisConsumer.make[F]()
     s3 <- S3Client.make[F]()
   } yield (kinesis, s3)
 
   def run(args: List[String]): IO[ExitCode] = {
-    implicit val logger: SelfAwareStructuredLogger[IO] = LoggerFactory[IO].getLogger
-    getResources[IO].use { case(kinesis, s3Client) =>
+    implicit val logger: SelfAwareStructuredLogger[IO] =
+      LoggerFactory[IO].getLogger
+    getResources[IO].use { case (kinesis, s3Client) =>
       for {
         kinesisCfg <- KinesisCfgBuilder.make[IO]().load
         s3Cfg <- S3CfgBuilder.make[IO]().load

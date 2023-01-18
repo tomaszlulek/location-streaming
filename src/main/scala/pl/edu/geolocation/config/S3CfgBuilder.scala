@@ -8,11 +8,10 @@ import eu.timepit.refined.types.string.NonEmptyString
 
 object S3CfgBuilder {
 
-  final case class S3Cfg
-  (
-    bucketName: NonEmptyString,
-    directory: NonEmptyString,
-    recordsInFile: PosInt
+  final case class S3Cfg(
+      bucketName: NonEmptyString,
+      directory: NonEmptyString,
+      recordsInFile: PosInt
   )
 
   def make[F[_]](): ConfigValue[F, S3Cfg] = {

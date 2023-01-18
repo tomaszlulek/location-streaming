@@ -1,16 +1,17 @@
 package pl.edu.geolocation.s3
 
 import cats.Applicative
-import cats.implicits._
-import cats.effect.{Async, Clock}
 import cats.effect.std.UUIDGen
+import cats.effect.{Async, Clock}
+import cats.implicits._
 import eu.timepit.refined.types.string.NonEmptyString
-import fs2.{Chunk, Pipe, Stream}
 import fs2.aws.kinesis.CommittableRecord
 import fs2.aws.s3.S3
 import fs2.aws.s3.models.Models.{BucketName, FileKey}
+import fs2.{Chunk, Pipe, Stream}
 import org.typelevel.log4cats.Logger
 import pl.edu.geolocation.config.S3CfgBuilder.S3Cfg
+
 import java.nio.charset.StandardCharsets
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter

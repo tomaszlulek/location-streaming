@@ -5,10 +5,9 @@ import ciris.{ConfigValue, env}
 
 object KinesisCfgBuilder {
 
-  final case class KinesisCfg
-  (
-    kinesisStream: String,
-    consumerName: Option[String]
+  final case class KinesisCfg(
+      kinesisStream: String,
+      consumerName: Option[String]
   )
 
   def make[F[_]](): ConfigValue[F, KinesisCfg] = {

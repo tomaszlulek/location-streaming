@@ -15,13 +15,14 @@ object HttpClient {
       builder = NettyClientBuilder[F]
       afterProxy =
         if (config.proxyHost.isDefined && config.proxyPort.isDefined) {
-          builder.withProxy(HttpProxy(
-            Scheme.https,
-            Host.fromString(config.proxyHost.get).get,
-            Port.fromInt(config.proxyPort.get.value)
-          ))
-        }
-        else builder
+          builder.withProxy(
+            HttpProxy(
+              Scheme.https,
+              Host.fromString(config.proxyHost.get).get,
+              Port.fromInt(config.proxyPort.get.value)
+            )
+          )
+        } else builder
       client <- afterProxy.resource
     } yield client
   }
