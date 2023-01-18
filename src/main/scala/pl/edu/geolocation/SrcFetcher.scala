@@ -3,12 +3,11 @@ package pl.edu.geolocation
 import cats.effect.{ExitCode, IO, IOApp}
 import org.typelevel.log4cats.slf4j.Slf4jFactory
 import org.typelevel.log4cats.LoggerFactory
-import fs2.aws.kinesis.publisher.writeObjectToKinesis
+import fs2.aws.kinesis.publisher.writeAndForgetObjectToKinesis
 import pl.edu.geolocation.config.KinesisCfgBuilder
 import pl.edu.geolocation.kinesis.LocationRecord
 import pl.edu.geolocation.kinesis.LocationRecord.implicits._
 import pl.edu.geolocation.sources.ztm.ZTMApi
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.language.postfixOps
 
 object SrcFetcher extends IOApp {
@@ -22,8 +21,8 @@ object SrcFetcher extends IOApp {
       _ <- logger.info(s"Starting application publishing source stream to Kinesis stream ${config.kinesisStream}")
       _ <- ZTMApi.makeLocationSource[IO]().getStream
         .map(a => (a.id, a))
-        .through(writeObjectToKinesis[IO, LocationRecord](config.kinesisStream))
-        .evalTap(a => logger.info(s"Published location record: ${a._1}"))
+        .through(writeAndForgetObjectToKinesis[IO, LocationRecord](config.kinesisStream))
+        .evalTap(a => logger.debug(s"Published location record: $a"))
         .compile
         .drain
     } yield ExitCode.Success
