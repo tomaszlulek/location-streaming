@@ -1,15 +1,16 @@
 package pl.edu.geolocation.kinesis
 
-import io.circe.{Decoder, Encoder}
 import io.circe.generic.semiauto._
 import io.circe.syntax._
+import io.circe.{Decoder, Encoder}
 
 import java.nio.ByteBuffer
 import java.time.format.DateTimeFormatter
 import java.time.{Instant, LocalDateTime, ZoneId}
 
 case class LocationRecord(
-    id: String,
+    unique_id: String,
+    business_id: String,
     lat: BigDecimal,
     lon: BigDecimal,
     ts: Instant,
@@ -22,13 +23,16 @@ object LocationRecord {
 
   private val formatter = DateTimeFormatter
     .ofPattern("yyyy-MM-dd HH:mm:ss.SSS")
-    .withZone(ZoneId.of("UTC"))
 
   object implicits {
     implicit val instantEncoder: Encoder[Instant] = Encoder.encodeString
-      .contramap[Instant](instant => formatter.format(instant))
+      .contramap[Instant](instant =>
+        formatter.format(instant.atZone(ZoneId.of("UTC")))
+      )
     implicit val instantDecoder: Decoder[Instant] = Decoder.decodeString
-      .map(a => Instant.from(LocalDateTime.parse(a, formatter).atZone(ZoneId.of("UTC"))))
+      .map(a =>
+        LocalDateTime.parse(a, formatter).atZone(ZoneId.of("UTC")).toInstant
+      )
     implicit val locationRecordEncoder: Encoder[LocationRecord] =
       deriveEncoder[LocationRecord]
     implicit val locationRecordDecoder: Decoder[LocationRecord] =

@@ -25,7 +25,7 @@ object SrcFetcher extends IOApp {
       _ <- ZTMApi
         .makeLocationSource[IO]()
         .getStream
-        .map(a => (a.id, a))
+        .map(a => (a.unique_id, a))
         .through(
           writeAndForgetObjectToKinesis[IO, LocationRecord](
             config.kinesisStream

@@ -29,7 +29,8 @@ CREATE DATABASE IF NOT EXISTS locations;
 
 -- create external table on S3 data imported by Kinesis2S3 application
 CREATE EXTERNAL TABLE IF NOT EXISTS `locations`.`history` (
-  `id` string,
+  `unique_id` string,
+  `business_id` string,
   `lat` double,
   `lon` double,
   `ts` timestamp,
