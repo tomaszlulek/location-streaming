@@ -3,20 +3,24 @@
 The project provides a framework to fetch, load and analyze location data in a stream.
 
 ## Core technologies
-- Scala
-- Cats Effect
-- fs2
-- http4s
-- AWS Kinesis
-- AWS S3
-- AWS Athena
-- Docker
+Programming:
+- [Scala](https://www.scala-lang.org/)
+- [Cats Effect](https://typelevel.org/cats-effect/)
+- [fs2](https://fs2.io/)
 - [fs2-aws](https://github.com/laserdisc-io/fs2-aws)
+- [http4s](https://http4s.org/)
+
+Building:
+- [sbt](https://www.scala-sbt.org/)
+- [Docker](https://www.docker.com/)
+
+Infrastructure:
+- [AWS Kinesis, S3, Athena, DynamoDB](https://aws.amazon.com/)
 
 
 ## Building
 
-The project uses SBT as the main build tool. You can run SBT directly or use the provided `Dockerfile` to build the project in the first stage and then the Docker image in the second.
+The project uses sbt as the main build tool. You can run sbt directly or use the provided `Dockerfile` to build the project in the first stage and then the Docker image in the second.
 
 Building Docker image:
 ```bash
