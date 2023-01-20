@@ -38,3 +38,8 @@ libraryDependencies ++= Seq(
 )
 
 dependencyOverrides += "io.circe" %% "circe-parser" % circeVersion
+
+ThisBuild / assemblyMergeStrategy := {
+  case PathList("META-INF", xs @ _*) => MergeStrategy.discard
+  case x => MergeStrategy.first
+}
