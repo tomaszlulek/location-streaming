@@ -1,0 +1,17 @@
+# AWS credentials
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+# optional AWS_SESSION_TOKEN=
+
+# Kinesis target stream
+KINESIS_STREAM=
+
+# ZTM API details
+ZTM_ENDPOINT=https://api.um.warszawa.pl/api/action/busestrams_get/
+# optional (default 60) ZTM_API_FREQUENCY_SECONDS=60
+ZTM_API_KEY=
+ZTM_RESOURCE_ID=
+
+# HTTP proxy to use for sending HTTP requests
+# optional PROXY_HOST=
+# optional PROXY_PORT=

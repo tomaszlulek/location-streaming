@@ -1,0 +1,11 @@
+# AWS credentials
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+# optional AWS_SESSION_TOKEN=
+
+# Kinesis source stream and the name of the application consumer
+KINESIS_STREAM=
+CONSUMER_NAME=Kinesis2DDB
+
+# DynamoDB target table name
+DDB_TABLE_NAME=
