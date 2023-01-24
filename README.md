@@ -47,7 +47,7 @@ docker run \
 The application creates fs2 stream and sends it to Amazon Kinesis. Example implementation sources the data from the API with real-time positions of all buses and trams in the city of Warsaw (https://api.um.warszawa.pl). SrcFetcher must transform the source data to the common model. It means providing the following fields:
 
 - business_id - the main identifier used to query for the locations (for example bus or tram line number, customer id)
-- unique_id - unique entity identifier (at any given time) - for line number with vehicle id, customer id with device_id
+- unique_id - unique entity identifier (at any given time) - for example line number with vehicle id, customer id with device_id
 - lat - latitude
 - long - longtitude
 - ts - observation timestamp
