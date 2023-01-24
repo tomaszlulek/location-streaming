@@ -70,8 +70,8 @@ CREATE DATABASE IF NOT EXISTS locations;
 CREATE EXTERNAL TABLE IF NOT EXISTS `locations`.`history` (
   `unique_id` string,
   `business_id` string,
-  `lat` double,
-  `lon` double,
+  `lat` decimal(8,6),
+  `lon` decimal(8,6),
   `ts` timestamp,
   `params` map < string,
   string >,
