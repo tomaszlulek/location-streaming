@@ -10,3 +10,4 @@ CONSUMER_NAME=Kinesis2S3
 # S3 target bucket and directory
 BUCKET_NAME=
 DIRECTORY=ztm
+# optional, default 1000 RECORDS_IN_FILE=

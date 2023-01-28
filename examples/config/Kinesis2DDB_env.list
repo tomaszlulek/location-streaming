@@ -9,3 +9,5 @@ CONSUMER_NAME=Kinesis2DDB
 
 # DynamoDB target table name
 DDB_TABLE_NAME=
+# optional, default 1 DDB_PARALLELISM=
+# optional, default 25 DDB_BATCH_SIZE=
