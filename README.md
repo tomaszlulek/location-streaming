@@ -92,8 +92,10 @@ TBLPROPERTIES ('classification' = 'json');
 
 -- add newly created partitions
 MSCK REPAIR TABLE locations.history;
-
 ```
+
+Example analyses: [examples/athena](examples/athena).
+
 ## Queries in DynamoDB
 The target DynamoDB table must include the following fields:
 
@@ -106,3 +108,5 @@ This data model enables efficient querying for the location data of the specific
 
 1. get the business_id latest location
 2. get all locations of the business_id in a given time unit (year, month, day, hour)
+
+Example queries: [examples/dynamodb](examples/dynamodb).
